@@ -12,6 +12,22 @@ export function drawCircle(
   context.fill()
   context.restore()
 }
+
+export function drawImage(
+  context: CanvasRenderingContext2D,
+  { x = 0, y = 0, r = 0, fillStyle = '', strokeStyle = '', image = null }
+) {
+  context.save()
+  // context.fillStyle = fillStyle
+  context.strokeStyle = strokeStyle
+  console.log(image);
+  if (image != 'transparent') context.drawImage(image, x-25, y-25);
+  // context.beginPath()
+  // context.arc(x, y, r, 0, 2 * Math.PI, false)
+  // context.fill()
+  context.restore()
+
+}
 /**
  * @see http://stackoverflow.com/a/11770000/917957
  * @param context Canvas 2D Context

@@ -27,11 +27,18 @@ export class BoardBase {
   map: Array<Array<number>>
   protected winnerBoardPiece: BoardPiece
 
+  imageRed: HTMLImageElement
+  imageBlue: HTMLImageElement
+
   constructor() {
     this.map = []
     this.winnerBoardPiece = BoardPiece.EMPTY
     this.initConstants()
     this.reset()
+    this.imageRed = new Image();
+    this.imageRed.src = require('../../static/niko-heart-red.png');
+    this.imageBlue = new Image();
+    this.imageBlue.src = require('../../static/niko-heart-blue.png');
   }
 
   reset() {
@@ -156,6 +163,17 @@ export class BoardBase {
     }
 
     return BoardPiece.EMPTY
+  }
+
+  public getPlayerImage(boardPiece: BoardPiece): any {
+    switch (boardPiece) {
+      case BoardPiece.PLAYER_1:
+        return this.imageRed
+      case BoardPiece.PLAYER_2:
+        return this.imageBlue
+      default:
+        return 'transparent'
+    }
   }
 
   protected getPlayerColor(boardPiece: BoardPiece): string {

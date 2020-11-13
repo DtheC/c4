@@ -1,7 +1,7 @@
 import { BoardBase, BoardPiece } from '@kenrick95/c4/src/board'
 import { Player } from '@kenrick95/c4/src/player'
 import { onresize, animationFrame } from '@kenrick95/c4/src/utils'
-import { drawMask, drawCircle, clearCanvas } from './utils'
+import { drawMask, drawCircle, drawImage, clearCanvas } from './utils'
 
 export class Board extends BoardBase {
   canvas: HTMLCanvasElement
@@ -65,7 +65,7 @@ export class Board extends BoardBase {
     column: number,
     boardPiece: BoardPiece
   ): Promise<void> {
-    const fillStyle = this.getPlayerColor(boardPiece)
+    const fillStyle = this.getPlayerColor(boardPiece);
     let currentY = 0
     const doAnimation = async () => {
       clearCanvas(this)
@@ -92,19 +92,36 @@ export class Board extends BoardBase {
     drawMask(this)
     for (let y = 0; y < BoardBase.ROWS; y++) {
       for (let x = 0; x < BoardBase.COLUMNS; x++) {
-        drawCircle(this.context, {
-          x:
-            3 * BoardBase.PIECE_RADIUS * x +
-            BoardBase.MASK_X_BEGIN +
-            2 * BoardBase.PIECE_RADIUS,
-          y:
-            3 * BoardBase.PIECE_RADIUS * y +
-            BoardBase.MASK_Y_BEGIN +
-            2 * BoardBase.PIECE_RADIUS,
-          r: BoardBase.PIECE_RADIUS,
-          fillStyle: this.getPlayerColor(this.map[y][x]),
-          strokeStyle: BoardBase.PIECE_STROKE_STYLE,
-        })
+        if (this.getPlayerImage(this.map[y][x]) == null) {
+          drawCircle(this.context, {
+            x:
+              3 * BoardBase.PIECE_RADIUS * x +
+              BoardBase.MASK_X_BEGIN +
+              2 * BoardBase.PIECE_RADIUS,
+            y:
+              3 * BoardBase.PIECE_RADIUS * y +
+              BoardBase.MASK_Y_BEGIN +
+              2 * BoardBase.PIECE_RADIUS,
+            r: BoardBase.PIECE_RADIUS,
+            fillStyle: this.getPlayerColor(this.map[y][x]),
+            strokeStyle: BoardBase.PIECE_STROKE_STYLE,
+          })
+        } else {
+          drawImage(this.context, {
+            x:
+              3 * BoardBase.PIECE_RADIUS * x +
+              BoardBase.MASK_X_BEGIN +
+              2 * BoardBase.PIECE_RADIUS,
+            y:
+              3 * BoardBase.PIECE_RADIUS * y +
+              BoardBase.MASK_Y_BEGIN +
+              2 * BoardBase.PIECE_RADIUS,
+            r: BoardBase.PIECE_RADIUS,
+            fillStyle: '#FF00FF',
+            strokeStyle: BoardBase.PIECE_STROKE_STYLE,
+            image: this.getPlayerImage(this.map[y][x])
+          })
+        }
       }
     }
   }
