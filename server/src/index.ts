@@ -12,6 +12,7 @@ import {
   hungUp,
   move,
   renewLastSeen,
+  listGames,
 } from './actions'
 import { MatchId, State, ActionTypes } from './types'
 
@@ -79,6 +80,11 @@ wss.on('connection', (ws: WebSocket) => {
           store.dispatch(hungUp(playerId))
         }
         break
+      case MESSAGE_TYPE.LIST_GAMES:
+        {
+          store.dispatch(listGames(playerId));
+        }
+        break;
     }
   })
   ws.on('close', () => {

@@ -20,11 +20,15 @@ export enum MESSAGE_TYPE {
 
   MOVE_MAIN = 'MOVE_MAIN',
   MOVE_SHADOW = 'MOVE_SHADOW',
+
+  LIST_GAMES = 'LIST_GAMES',
 }
 
 export type PlayerId = string
 
 export type MatchId = string
+
+export type Match = [string];
 
 export type GameOnlineMessage =
   | { type: 'NEW_PLAYER_CONNECTION_REQUEST'; payload: {} }
@@ -60,6 +64,7 @@ export type GameOnlineMessage =
   | { type: 'OTHER_PLAYER_HUNGUP'; payload: {} }
   | { type: 'MOVE_MAIN'; payload: { column: number } }
   | { type: 'MOVE_SHADOW'; payload: { column: number } }
+  | {type: 'LIST_GAMES'; payload: {matches: Match}}
 
 export function constructMessage(
   type: MESSAGE_TYPE,

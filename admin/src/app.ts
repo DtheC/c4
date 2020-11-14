@@ -2,6 +2,7 @@ import 'es6-promise/auto'
 import 'url-search-params-polyfill'
 import * as Game from './game'
 import { Board } from './board'
+import {GameList} from './gamelist';
 import './style.css'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,6 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   const board = new Board(canvas)
   board.render()
+
+  const gameListElement = document.getElementById('game-list');
+  if (!gameListElement) {
+    console.error('Game List section is missing');
+    return;
+  }
+  const gameListGenerator = new GameList(gameListElement);
 
   const searchParams = new URLSearchParams(location.search)
   const connectionMatchId = searchParams.get('matchId')

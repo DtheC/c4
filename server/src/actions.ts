@@ -17,6 +17,8 @@ export enum ACTION_TYPE {
 
   END_GAME = 'END_GAME',
   RESET_GAME = 'RESET_GAME',
+
+  LIST_GAMES = 'LIST_GAMES'
 }
 export function newPlayerConnection(ws: WebSocket): AppThunk<PlayerId> {
   return (dispatch) => {
@@ -293,5 +295,31 @@ export function gameReset(matchId: MatchId): AppThunk {
         })
       )
     }
+  }
+}
+
+export function listGames(playerId: PlayerId): AppThunk {
+  return (dispatch, getState) => {
+    const state = getState();
+
+    const player = state.players[playerId];
+    if (!player) {
+      console.warn(
+        `[actions] Player ${playerId} is gone but still have reference to it`
+      )
+      return;
+    }
+    player.ws.send(
+      constructMessage(MESSAGE_TYPE.LIST_GAMES, {
+        matches: state.matches,
+      })
+    )
+
+    // dispatch({
+    //   type: ACTION_TYPE.LIST_GAMES,
+    //   payload: {
+    //     matches: state.matches,
+    //   },
+    // })
   }
 }

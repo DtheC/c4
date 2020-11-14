@@ -111,3 +111,10 @@ export type ResetGameAction = {
     matchId: MatchId
   }
 }
+
+export type ListGames = {
+  type: 'LIST_GAMES',
+  payload: {
+    matches: [string]
+  }
+}

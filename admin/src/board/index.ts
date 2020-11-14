@@ -44,6 +44,11 @@ export class Board extends BoardBase {
     }
   }
 
+  updateMap(newMap: Array<Array<number>>) {
+    this.map = newMap;
+    this.render();
+  }
+
   initConstants() {
     super.initConstants()
     if (this.canvas) {

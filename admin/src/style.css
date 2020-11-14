@@ -105,3 +105,16 @@ h2 {
   max-width: 550px;
   margin: 0 auto;
 }
+
+#game-list {
+  text-align: center;
+  width: 100%;
+}
+
+.match-row {
+  background-color: tomato;
+  margin-top: 1em;
+  padding: .25em;
+  width: 100%;
+  cursor: pointer;
+}
