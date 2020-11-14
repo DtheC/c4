@@ -20,13 +20,15 @@ export class GameList {
   ws: null | WebSocket = null;
 
   currentMatch: MatchId | null;
+  emitMap: Function;
 
-  constructor(element: HTMLElement) {
+  constructor(element: HTMLElement, onMapUpdate: Function) {
     this.listElement = element;
     this.currentMatch = null;
     element.innerText = "FJHSDFHDSFHDKSJFDS";
     this.checkForgames = this.checkForgames.bind(this);
     this.selectGame = this.selectGame.bind(this);
+    this.emitMap = onMapUpdate;
     this.setupWS();
   }
   setupWS() {
@@ -85,6 +87,7 @@ export class GameList {
     if (!this.currentMatch) return;
     if (!matches[this.currentMatch]) return;
     console.log(matches[this.currentMatch].board);
+    if (this.emitMap) this.emitMap(matches[this.currentMatch].board.map);
   }
 
   selectGame(matchId: MatchId) {

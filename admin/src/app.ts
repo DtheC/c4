@@ -19,7 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('Game List section is missing');
     return;
   }
-  const gameListGenerator = new GameList(gameListElement);
+  const gameListGenerator = new GameList(gameListElement, (map: Array<Array<number>>) => {
+    board.updateMap(map);
+  });
 
   const searchParams = new URLSearchParams(location.search)
   const connectionMatchId = searchParams.get('matchId')
